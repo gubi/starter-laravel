@@ -1,0 +1,42 @@
+version: '2'
+services:
+  app:
+    build: .
+    depends_on:
+      - mariadb
+      - redis
+    volumes:
+      - ./src:/var/www/app:rw
+  php:
+    dns: 8.8.8.8
+    image: zikkio/base-php
+    volumes_from:
+      - app:rw
+  nginx:
+    image: zikkio/base-nginx
+    depends_on:
+      - php
+    ports:
+      - 9080:80
+    volumes_from:
+      - app:rw
+  redis:
+    image: redis
+  mariadb:
+    image: mariadb
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    ports:
+      - 3307:3306
+  composer:
+    dns: 8.8.8.8
+    image: zikkio/base-composer
+    volumes:
+      - ./src:/data
+  artisan:
+    dns: 8.8.8.8
+    image: zikkio/base-artisan
+    volumes:
+      - ./src:/data
+    ports:
+      - 9081:8000
