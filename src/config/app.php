@@ -168,6 +168,7 @@ return [
          * Vendor Service Providers...
          */
         Barryvdh\Cors\ServiceProvider::class,
+        Aws\Laravel\AwsServiceProvider::class,
     ],
 
     /*
