@@ -8,7 +8,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Zikkio\Models\SQLModel;
 
-class User extends SQLModel implements
+class Account extends SQLModel implements
     AuthenticatableContract,
     AuthorizableContract
 {

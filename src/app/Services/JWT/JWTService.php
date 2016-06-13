@@ -23,7 +23,8 @@ class JWTService implements JWTManagerContract
 
     public function __construct(ClaimsProvider $claimsProvider)
     {
-        $this->key = env('JWT_SECRET', 'WPWpDddzojT9YjHw8ZQG4p09tqycuiNU');
+        $this->key = (env('APP_DEBUG') === true) ? '12345678901234567890123456789012' : env('JWT_SECRET');
+
         $this->claims = $claimsProvider;
     }
 
