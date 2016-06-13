@@ -14,10 +14,9 @@ It diverges from default Laravel in a few things:
  - Both **PHPUnit** and **PHPSpec** are provided with the respective configuration files
 
 ## Installation
-A new project using this starter package can be created with the following command
-```
-composer create-project --prefer-dist zikkio/laravel-starter service 
-```
+~~A new project using this starter package can be created with the following command~~
+~~`composer create-project --prefer-dist zikkio/laravel-starter service `~~ 
+(_TODO_: Right now, you'll have to clone/download this repo)
 
 ## Setup
 The first step to a proper initialization is to generate both the laravel and jwt-auth keys
