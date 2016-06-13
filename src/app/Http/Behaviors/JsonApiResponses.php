@@ -52,10 +52,11 @@ trait JsonApiResponses
      * @param string $message
      * @param string $description
      * @param int $code
+     * @param array $data
      * @param int $statusCode
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function respondError($message = "", $description = "", $code = 0, $statusCode = 400){
+    protected function respondError($message = "", $description = "", $code = 0, $data = [], $statusCode = 400){
         $message = $message ?: "There was an error";
         $description = $description ?: $message;
 
@@ -65,6 +66,7 @@ trait JsonApiResponses
                 'message' => $message,
                 'description' => $description,
                 'code' => $code,
+                'data' => $data,
             ],
         ]);
     }
@@ -80,19 +82,19 @@ trait JsonApiResponses
     }
 
     protected function respondUnauthenticated($message = "You need authentication to perform this action", $description = "You need authentication to perform this action", $code = 0){
-        return $this->respondError($message, $description, $code, 401);
+        return $this->respondError($message, $description, $code, [], 401);
     }
 
     protected function respondForbidden($message = "You are not allowed to perform this action", $description = "You are not allowed to perform this action", $code = 0){
-        return $this->respondError($message, $description, $code, 403);
+        return $this->respondError($message, $description, $code, [], 403);
     }
 
     protected function respondMethodNotAllowed($message = "This method is not supported on this endpoint", $description = "This method is not supported on this endpoint", $code = 0){
-        return $this->respondError($message, $description, $code, 405);
+        return $this->respondError($message, $description, $code, [], 405);
     }
 
-    protected function respondUnexpectedError($message = 'Unexpected Error', $description = 'There has been an internal error processing the request. Please retry', $code = 0){
-        return $this->respondError($message, $description, $code, 500);
+    protected function respondUnexpectedError($message = 'Unexpected Error', $description = 'There has been an internal error processing the request. Please retry', $code = 0, $data = []){
+        return $this->respondError($message, $description, $code, $data, 500);
     }
 
 
