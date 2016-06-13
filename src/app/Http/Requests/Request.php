@@ -14,7 +14,8 @@ abstract class Request extends FormRequest
      *
      * @return bool
      */
-    public function authorize(){
+    public function authorize()
+    {
         return true; //Means authorization is delegated to policies
     }
 
@@ -22,14 +23,16 @@ abstract class Request extends FormRequest
      * Validation rules for request's parameters
      * @return array
      */
-    public function rules(){
+    public function rules()
+    {
         return [];
     }
 
     /**
     Handles Validation Errors
      */
-    public function response(array $errors){
+    public function response(array $errors)
+    {
         return $this->respondError('Invalid Request', 'Some fields are missing/invalid');
     }
 
@@ -37,7 +40,8 @@ abstract class Request extends FormRequest
      * Handles Authorization Errors
      * @return mixed
      */
-    public function forbiddenResponse(){
+    public function forbiddenResponse()
+    {
         return $this->respondForbidden('Action Forbidden', 'You lack the necessary permissions/conditions to perform this action');
     }
 }
