@@ -19,7 +19,9 @@ It diverges from default Laravel in a few things:
 (_TODO_: Right now, you'll have to clone/download this repo)
 
 ## Setup
-The first step to a proper initialization is to generate both the laravel and jwt-auth keys
+First of all, run `composer install` in the `src` folder.
+
+Then, generate both the laravel and jwt-auth keys
 ###### Laravel key
 ```bash
 php artisan key:generate
