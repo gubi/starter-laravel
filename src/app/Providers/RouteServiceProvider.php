@@ -8,13 +8,27 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 class RouteServiceProvider extends ServiceProvider
 {
     /**
-     * This namespace is applied to your controller routes.
-     *
-     * In addition, it is set as the URL generator's root namespace.
+     * This namespace is applied to your gateway controller routes.
      *
      * @var string
      */
-    protected $namespace = 'Zikkio\Http\Controllers';
+    protected $gatewayNamespace = 'Zikkio\Http\Controllers\Gateway';
+
+    /**
+     * This namespace is applied to your network controller routes.
+     *
+     * @var string
+     */
+    protected $networkNamespace = 'Zikkio\Http\Controllers\Network';
+
+
+    /**
+     * Route binding mappings
+     * @var array
+     */
+    protected $routeModelMapping = [
+        //Ex. 'users' => UserModel::class
+    ];
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -27,6 +41,8 @@ class RouteServiceProvider extends ServiceProvider
         //
 
         parent::boot($router);
+
+        $this->applyRouteBindings($router);
     }
 
     /**
@@ -51,9 +67,23 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapApiRoutes(Router $router)
     {
         $router->group([
-            'namespace' => $this->namespace, 'middleware' => 'api',
+            'namespace' => $this->networkNamespace, 'middleware' => 'api',
         ], function ($router) {
-            require app_path('Http/routes.php');
+            require app_path('Http/routes_network.php');
         });
+
+
+        $router->group([
+            'namespace' => $this->gatewayNamespace, 'middleware' => 'api',
+        ], function ($router) {
+            require app_path('Http/routes_gateway.php');
+        });
+    }
+
+    protected function applyRouteBindings(Router $router)
+    {
+        foreach($this->routeModelMapping as $routeParameter => $model) {
+            $router->model($routeParameter, $model);
+        }
     }
 }
