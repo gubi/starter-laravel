@@ -167,7 +167,7 @@ return [
         /**
          * Vendor Service Providers...
          */
-
+        Barryvdh\Cors\ServiceProvider::class,
     ],
 
     /*
