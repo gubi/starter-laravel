@@ -65,7 +65,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => Zikkio\Models\Auth\User::class,
+            'model' => Zikkio\Models\Auth\Account::class,
         ],
 
         'nodes' => [
