@@ -20,7 +20,8 @@ trait JsonApiResponses
      * @param array $additionalData
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function respondJson($statusCode, $additionalData = []){
+    protected function respondJson($statusCode, $additionalData = [])
+    {
         $request = request();
         $response = response();
 
@@ -43,7 +44,8 @@ trait JsonApiResponses
      * @param int $statusCode
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function respondSuccess($data = [], $statusCode = 200){
+    protected function respondSuccess($data = [], $statusCode = 200)
+    {
         return $this->respondJson($statusCode, [
             'success' => true,
             'data' => $data,
@@ -59,7 +61,13 @@ trait JsonApiResponses
      * @param int $statusCode
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function respondError($message = "", $description = "", $code = 0, $data = [], $statusCode = 400){
+    protected function respondError(
+        $message = "",
+        $description = "",
+        $code = 0,
+        $data = [],
+        $statusCode = 400
+    ) {
         $message = $message ?: "There was an error";
         $description = $description ?: $message;
 
@@ -80,23 +88,41 @@ trait JsonApiResponses
         The following methods are meant to both save time to the developer and make the code more semantic
     */
 
-    protected function respondCreated($data = []){
+    protected function respondCreated($data = [])
+    {
         return $this->respondSuccess($data, 201);
     }
 
-    protected function respondUnauthenticated($message = "You need authentication to perform this action", $description = "You need authentication to perform this action", $code = 0){
+    protected function respondUnauthenticated(
+        $message = "You need authentication to perform this action",
+        $description = "You need authentication to perform this action",
+        $code = 0
+    ) {
         return $this->respondError($message, $description, $code, [], 401);
     }
 
-    protected function respondForbidden($message = "You are not allowed to perform this action", $description = "You are not allowed to perform this action", $code = 0){
+    protected function respondForbidden(
+        $message = "You are not allowed to perform this action",
+        $description = "You are not allowed to perform this action",
+        $code = 0
+    ) {
         return $this->respondError($message, $description, $code, [], 403);
     }
 
-    protected function respondMethodNotAllowed($message = "This method is not supported on this endpoint", $description = "This method is not supported on this endpoint", $code = 0){
+    protected function respondMethodNotAllowed(
+        $message = "This method is not supported on this endpoint",
+        $description = "This method is not supported on this endpoint",
+        $code = 0
+    ) {
         return $this->respondError($message, $description, $code, [], 405);
     }
 
-    protected function respondUnexpectedError($message = 'Unexpected Error', $description = 'There has been an internal error processing the request. Please retry', $code = 0, $data = []){
+    protected function respondUnexpectedError(
+        $message = 'Unexpected Error',
+        $description = 'There has been an internal error processing the request. Please retry',
+        $code = 0,
+        $data = []
+    ) {
         return $this->respondError($message, $description, $code, $data, 500);
     }
 
@@ -116,7 +142,7 @@ trait JsonApiResponses
             "token" => $request->bearerToken(),
             "signature" => "",
         ];
-        if($request->route()){
+        if ($request->route()) {
             $requestEnvelope['signature'] = $request->fingerprint();
         }
         return $requestEnvelope;
