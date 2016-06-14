@@ -1,8 +1,9 @@
 <?php
 namespace Zikkio\Http\Behaviors;
+
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Routing\ResponseFactory;
+use Zikkio\Events\Http\Response\Sent;
 
 /**
  * Trait RespondsToApiRequests
@@ -30,6 +31,8 @@ trait JsonApiResponses
             "requestEnvelope" => $requestEnvelope,
             "responseEnvelope" => $responseEnvelope,
         ], $additionalData);
+        
+        event(new Sent($responseData, $statusCode));
 
         return $response->json($responseData, $statusCode);
     }
